@@ -39,11 +39,11 @@ class BachatDBProvider {
 //    print("dates are ${dates.length}");
     return dates;
   }
-  Future<List<Item>> getItems(String date) async
+  Future<List<Item>> getItems(String date,String type) async
   {
     final db = await database;
    // await getDates();
-    var res = await db.rawQuery("select * from item where date= '$date'");
+    var res = await db.rawQuery("select * from item where date= '$date' and type = '$type' ");
 
     List<Item> items = new List();
     //print("meri length hai ${res.length}");
@@ -87,6 +87,19 @@ class BachatDBProvider {
     {
       print(e.toString());
     }
+    return res;
+  }
+  deleteItem(Item item) async
+  {
+    final db = await database;
+    String query = "delete from item where id = ${item.id}";
+    var res = await db .rawQuery(query);
+    String query2 = "select * from mydate where dayy = '${item.date}' ";
+    var res2 = await db.rawQuery(query2);
+    if(res2.length==1)
+      {
+        await db.rawQuery("delete from mydate where dayy = '${item.date}'");
+      }
     return res;
   }
 

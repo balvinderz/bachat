@@ -32,8 +32,8 @@ class BachatPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            DebitedTab(),
-            DebitedTab(),
+            BachatTab(type: "Debited",),
+            BachatTab(type : "Credited"),
           ],
         ),
         floatingActionButton: FloatingActionButton(

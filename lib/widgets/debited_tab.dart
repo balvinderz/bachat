@@ -7,12 +7,14 @@ import 'package:sqflite/sqflite.dart';
 
 import 'debited_card.dart';
 
-class DebitedTab extends StatefulWidget {
+class BachatTab extends StatefulWidget {
+  String type ;
+  BachatTab({this.type});
   @override
   _DebitedTabState createState() => _DebitedTabState();
 }
 
-class _DebitedTabState extends State<DebitedTab> {
+class _DebitedTabState extends State<BachatTab> {
   List<Cost> costs = new List();
   List<List<Cost>> listOfCosts = new List();
   String date;
@@ -47,12 +49,12 @@ class _DebitedTabState extends State<DebitedTab> {
               itemCount: dates.length,
               itemBuilder: (_,index){
                 return FutureBuilder(
-                  future: BachatDBProvider.db.getItems(dates[index]),
+                  future: BachatDBProvider.db.getItems(dates[index],widget.type),
                   builder: (_a,AsyncSnapshot<List<Item>> itemSnapshot){
                     if(itemSnapshot.hasData)
                       {
                         print(itemSnapshot.data.length);
-                        return DebitedCard(
+                        return BachatCard(
                           date: dates[index],
                           items: itemSnapshot.data,
                         );
